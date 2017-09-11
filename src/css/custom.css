@@ -1,0 +1,188 @@
+body {
+  font-family: 'Lato', sans-serif !important;
+  background: #e1e2e4 !important;
+}
+.rt-td {
+  padding-left: 24px !important;
+  padding-right: 24px !important;
+  height: 48px !important;
+  text-align: left !important;
+  font-size: 13px !important;
+  white-space: nowrap !important;
+  text-overflow: ellipsis !important;
+  background-color: inherit !important;
+  padding-top: 16px !important;
+  text-align: center !important;
+}
+.rt-tr {
+  color: rgba(0, 0, 0, 0.87) !important;
+  height: 48px !important;
+}
+.pagination-page {
+  padding: 5px;
+  text-decoration: none;
+  cursor: pointer;
+  color: #337ab7;
+  text-decoration: none;
+}
+.pagination-button {
+  padding: 5px;
+  text-decoration: none;
+  cursor: pointer;
+  background: transparent;
+  border: 0px none;
+  color: #337ab7;
+}
+.pagination-div {
+  text-align: right;
+  padding-right: 20px;
+}
+.card {
+  position: relative;
+  margin: .5rem 0 1rem 0;
+  background-color: #fff;
+  /* -webkit-transition: -webkit-box-shadow .25s; */
+  /* transition: -webkit-box-shadow .25s; */
+ /* -o-transition: box-shadow .25s; */
+  /* transition: box-shadow .25s; */
+  /* transition: box-shadow .25s, -webkit-box-shadow .25s; */
+  border-radius: 2px;
+}
+.card.horizontal .card-stacked {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  position: relative;
+}
+.card.horizontal {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+.cards-div {
+  padding: 10px;
+  padding-left: 100px;
+  padding-right: 100px;
+}
+.card-content {
+  padding: 24px;
+  border-radius: 0 0 2px 2px;
+}
+.edit-icon {
+  text-align: right;
+  margin-top: -35px;
+}
+.overlay-head {
+  box-sizing: border-box;
+  display: block;
+  -webkit-animation: slide-left .3s ease-in-out forwards;
+  animation: slide-left .3s ease-in-out forwards;
+  transition: 'transform .3s ease-out';
+  WebkitTransition: '-webkit-transform .3s ease-out';
+  willChange: 'transform';
+}
+.overlay-head .overlay-sidebar {
+  position: fixed;
+  z-index: 100;
+  transition: 'opacity .3s ease-out, visibility .3s ease-out';
+  background-color: rgba(0,0,0,.5) !important;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  overflow: visible;
+}
+.overlay-head .overlay-layer-container {
+  -webkit-animation: slide-left .3s ease-in-out forwards;
+  animation: slide-left .3s ease-in-out forwards;
+  transition: 'transform .3s ease-out';
+  WebkitTransition: '-webkit-transform .3s ease-out';
+  willChange: 'transform';
+  position: absolute;
+  max-height: 100%;
+  min-width: 500px;
+  max-width: 500px;
+  overflow: auto;
+  right:0;
+  bottom: 0;
+  top: 0;
+  padding: 5px 10px;
+  box-shadow: none;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+}
+.overlay-hide {
+  display: none;
+}
+.overlay-rest {
+  width: calc(100% - 500px);
+  height: 100%;
+  left:0;
+  top:0;
+  bottom:0;
+}
+.font-weight-600 {
+  font-weight: 600;
+}
+.heading-form {
+  font-size: 1.5rem;
+}
+.ls-title-bar {
+  height: 4.1rem;
+  padding: 1.5rem 1.6rem 0 0;
+}
+.ls-section-divider:before {
+  left: 10.2rem;
+  right: 3.2rem;
+  pointer-events: none;
+  content: "";
+  height: .2rem;
+  position: absolute;
+  z-index: 1;
+  margin-top: 1rem;
+  background: rgba(22, 35, 58, 0.05);
+}
+.ls-title-bar .head-information {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  max-width: calc(100% - 12rem);
+  white-space: nowrap;
+}
+.ls-title-bar h2 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 600;
+  color: inherit;
+  display: inline-block;
+  line-height: 1.35;
+  margin: -.1rem 0 0;
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+  vertical-align: top;
+  padding-left: 100px;
+  font-size: 2rem;
+}
+.heading-form-small {
+  font-size: 1.2rem;
+}
+.input-group .form-control {
+  z-index: 0 !important;
+}
