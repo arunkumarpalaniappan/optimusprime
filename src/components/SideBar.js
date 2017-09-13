@@ -32,7 +32,7 @@ class SideBar extends Component {
       this.setState({errorbg: 'Maximum of 3 backgrounds can be chosen.'})
   }
   updateOppr() {
-    const {opprId} = this.props;
+    const {opprId,onDismiss} = this.props;
     let updatedOppr = {};
     let skillsIds = []
     for (var i =0 ;i<this.state.skillsvalue.length;i++) {
@@ -58,6 +58,7 @@ class SideBar extends Component {
     let oppr = {};
     oppr['opportunity'] = updatedOppr;
     this.props.actions.updateOpportunities(opprId,oppr);
+    onDismiss();
   }
   render() {
     let className;
@@ -66,9 +67,9 @@ class SideBar extends Component {
       value: this.state.address,
       onChange: this.onChange,
     }
-    if(opprupdate!= false) {
-      onDismiss();
-    }
+    // if(opprupdate!= false) {
+    //   onDismiss();
+    // }
     //hard-coding the value of background api as it remains constant and also making an async call will take more time than accessing from a local variable
     //however api for background can be accessed from  this.props.actions.loadOpportunitiesBackGround();
     let backgroundSkills = [{value:224,label:"Accounting"},{value:225,label:"Aerospace engineering"},{value:226,label:"Agriculture"},{value:1275,label:"Anthropology"},{value:227,label:"Archeology"},{value:228,label:"Architecture"},{value:229,label:"Arts"},{value:1276,label:"Assurance"},{value:1277,label:"Audit"},{value:230,label:"Automotive engineering"},{value:231,label:"Banking"},{value:1278,label:"Bioengineering"},{value:232,label:"Biology"},{value:1279,label:"Biomedical Science"},{value:233,label:"Business administration"},{value:234,label:"Chemical engineering"},{value:235,label:"Chemistry"},{value:236,label:"Civil engineering"},{value:237,label:"Communication & journalism"},{value:238,label:"Computer engineering"},{value:239,label:"Computer sciences"},{value:1280,label:"Design"},{value:1281,label:"Earth Sciences"},{value:1282,label:"Ecology"},{value:240,label:"Economics"},{value:241,label:"Education"},{value:242,label:"Electrical engineering"},{value:243,label:"Electronics engineering"},{value:1283,label:"Entrepreneurship"},{value:244,label:"Environmental engineering"},{value:245,label:"Finance"},{value:246,label:"Geography"},{value:247,label:"Graphic design"},{value:1284,label:"Health Science"},{value:1285,label:"History"},{value:1286,label:"Human Resources"},{value:1287,label:"Industrial Design"},{value:248,label:"Industrial engineering"},{value:249,label:"International relations"},{value:1288,label:"International Trade"},{value:1289,label:"Languages"},{value:250,label:"Law"},{value:251,label:"Linguistics"},{value:252,label:"Literature"},{value:1290,label:"Logistics"},{value:253,label:"Marketing"},{value:254,label:"Material engineering"},{value:255,label:"Mathematics"},{value:256,label:"Mechanical engineering"},{value:1291,label:"Media Arts"},{value:257,label:"Medicine"},{value:258,label:"Military sciences"},{value:1292,label:"Music"},{value:259,label:"Nanotechnology"},{value:1293,label:"Nursing"},{value:271,label:"Other"},{value:1294,label:"Petroleum Engineering"},{value:260,label:"Philosophy"},{value:261,label:"Physics"},{value:262,label:"Political science"},{value:263,label:"Psychology"},{value:264,label:"Public administration"},{value:265,label:"Public relations"},{value:266,label:"Religion"},{value:1295,label:"Social Work"},{value:267,label:"Sociology"},{value:268,label:"Software development and programming"},{value:1296,label:"Sports"},{value:1297,label:"Statistics"},{value:1298,label:"Systems and Computing Engineering"},{value:269,label:"Telecomunication engineering"},{value:1299,label:"Theater"},{value:270,label:"Tourism & hotel management"}];

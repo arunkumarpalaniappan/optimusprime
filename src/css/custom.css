@@ -82,6 +82,7 @@ body {
 .edit-icon {
   text-align: right;
   margin-top: -35px;
+  cursor: pointer;
 }
 .overlay-head {
   box-sizing: border-box;
