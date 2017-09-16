@@ -13,6 +13,7 @@
     "react": "^15.6.1",
     "react-autocomplete": "^1.7.1",
     "react-bootstrap": "^0.31.3",
+    "react-datetime": "^2.10.1",
     "react-dom": "^15.6.1",
     "react-materialize": "^1.0.11",
     "react-places-autocomplete": "^5.4.3",

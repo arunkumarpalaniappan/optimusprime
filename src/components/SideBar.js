@@ -7,6 +7,8 @@ import * as opportunitiesActions from '../actions/opportunitiesAction';
 import 'react-select/dist/react-select.css';
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 import R from 'ramda';
+import Datetime from 'react-datetime';
+import 'react-datetime/css/react-datetime.css'
  
 class SideBar extends Component { 
   constructor(props, context) {
@@ -27,9 +29,9 @@ class SideBar extends Component {
   }
   handleBackgroundSelectChange(bgvalue) {
     if(this.state.bgvalue.length<3 || this.state.bgvalue.length > bgvalue.length)
-      this.setState({ bgvalue:bgvalue,errorbg:'' });
+      this.setState({ bgvalue:bgvalue,backgrounderr:'' });
     else
-      this.setState({errorbg: 'Maximum of 3 backgrounds can be chosen.'})
+      this.setState({backgrounderr: 'Maximum of 3 backgrounds can be chosen.'})
   }
   updateOppr() {
     const {opprId,onDismiss} = this.props;
@@ -42,23 +44,47 @@ class SideBar extends Component {
     for (var i =0 ;i<this.state.bgvalue.length;i++) {
       backgroundIds.push({"option": "required","level": 0,"id":this.state.bgvalue[i]['value'],"name":this.state.bgvalue[i]['label']})
     }
-    updatedOppr['title'] = this.opprtitle.value;
-    updatedOppr['description'] = this.description.value;
-    updatedOppr['role_info'] = {};
-    updatedOppr['role_info']['city'] = this.state.address;
-    updatedOppr['skills'] = {};
-    updatedOppr['skills'] = skillsIds;
-    updatedOppr['backgrounds'] = {};
-    updatedOppr['backgrounds'] = backgroundIds;
-    updatedOppr['applications_close_date'] = this.applicationsclosedate.value;
-    updatedOppr['earliest_start_date'] = this.earlieststartdate.value;
-    updatedOppr['latest_end_date'] = this.latestenddate.value;
-    updatedOppr['salary'] = this.salary.value;
-    updatedOppr['selection_process'] = this.selectionprocess.value;
-    let oppr = {};
-    oppr['opportunity'] = updatedOppr;
-    this.props.actions.updateOpportunities(opprId,oppr);
-    onDismiss();
+    if(R.isEmpty(this.opprtitle.value)) {
+      this.setState({nameerr:'Name is required',descerr:'',addresserr:'',skillserr:'',backgrounderr:'',applicationerr:'',earliesterr:'',latesterr:'',salaryerr: '',selectionerr:''});
+    } else if(R.isEmpty(this.description.value)) {
+      this.setState({descerr:'Description is required',nameerr:'',addresserr:'',skillserr:'',backgrounderr:'',applicationerr:'',earliesterr:'',latesterr:'',salaryerr: '',selectionerr:''});
+    } else if(R.isEmpty(this.state.address)) {
+      this.setState({addresserr: 'City Name Required',descerr:'',nameerr:'',skillserr:'',backgrounderr:'',applicationerr:'',earliesterr:'',latesterr:'',salaryerr: '',selectionerr:''});
+    } else if(R.isEmpty(skillsIds)) {
+      this.setState({skillserr:'Skills are required',descerr:'',addresserr:'',nameerr:'',backgrounderr:'',applicationerr:'',earliesterr:'',latesterr:'',salaryerr: '',selectionerr:''});
+    } else if(R.isEmpty(backgroundIds)) {
+      this.setState({backgrounderr:'Background is required',descerr:'',addresserr:'',skillserr:'',nameerr:'',applicationerr:'',earliesterr:'',latesterr:'',salaryerr: '',selectionerr:''});
+    } else if(R.isEmpty(this.applicationsclosedate.state.inputValue)) {
+      this.setState({applicationerr: 'Application Close Date is required',descerr:'',addresserr:'',skillserr:'',backgrounderr:'',nameerr:'',earliesterr:'',latesterr:'',salaryerr: '',selectionerr:''});
+    } else if(R.isEmpty(this.earlieststartdate.state.inputValue)) {
+      this.setState({earliesterr: 'Earliest Start Date is required',descerr:'',addresserr:'',skillserr:'',backgrounderr:'',applicationerr:'',nameerr:'',latesterr:'',salaryerr: '',selectionerr:''});
+    } else if(R.isEmpty(this.latestenddate.state.inputValue)) {
+      this.setState({latesterr: 'Latest End Date is required',descerr:'',addresserr:'',skillserr:'',backgrounderr:'',applicationerr:'',earliesterr:'',nameerr:'',salaryerr: '',selectionerr:''});
+    } else if(R.isEmpty(this.salary.value)) {
+      this.setState({salaryerr: 'Salary is required',descerr:'',addresserr:'',skillserr:'',backgrounderr:'',applicationerr:'',earliesterr:'',latesterr:'',nameerr: '',selectionerr:''});
+    } else if(R.isEmpty(this.selectionprocess.value)) {
+      this.setState({selectionerr: 'Selection Process is required',descerr:'',addresserr:'',skillserr:'',backgrounderr:'',applicationerr:'',earliesterr:'',latesterr:'',salaryerr: '',nameerr:''});
+    } else {
+        let appclosedate = new Date() - new Date(this.applicationsclosedate.state.inputValue);
+        appclosedate = Math.abs(Math.floor((appclosedate/1000)/60/60/24));
+        updatedOppr['title'] = this.opprtitle.value;
+        updatedOppr['description'] = this.description.value;
+        updatedOppr['role_info'] = {};
+        updatedOppr['role_info']['city'] = this.state.address;
+        updatedOppr['skills'] = {};
+        updatedOppr['skills'] = skillsIds;
+        updatedOppr['backgrounds'] = {};
+        updatedOppr['backgrounds'] = backgroundIds;
+        updatedOppr['applications_close_date'] = new Date(this.applicationsclosedate.state.inputValue).toISOString()
+        updatedOppr['earliest_start_date'] = new Date(this.earlieststartdate.state.inputValue).toISOString();
+        updatedOppr['latest_end_date'] = new Date(this.latestenddate.state.inputValue).toISOString();
+        updatedOppr['salary'] = this.salary.value;
+        updatedOppr['selection_process'] = this.selectionprocess.value;
+        let oppr = {};
+        oppr['opportunity'] = updatedOppr;
+        //this.props.actions.updateOpportunities(opprId,oppr);
+        onDismiss();
+    }
   }
   render() {
     let className;
@@ -105,22 +131,27 @@ class SideBar extends Component {
                   <div className='col-sm-12 col-md-12 form-group input-group zero-margin'>
                   <h4 className='heading-form-small'>Title</h4>
                   <input className="form-control" id="opprtitle" type="text" ref={(input) => { this.opprtitle = input; }} name='opprtitle' placeholder="" />
+                  <span className="errclass">{this.state.nameerr}</span>
                   </div>
                   <div className='col-sm-12 col-md-12 form-group input-group zero-margin'>
                   <h4 className='heading-form-small'>Application Close Date</h4>
-                  <input className="form-control" id="applicationsclosedate" type="text" ref={(input) => { this.applicationsclosedate = input; }} name='applicationsclosedate' placeholder="" />
+                  <Datetime ref={(input) => { this.applicationsclosedate = input; }} />
+                  <span className="errclass">{this.state.applicationerr}</span>
                   </div>
                   <div className='col-sm-12 col-md-12 form-group input-group zero-margin'>
                   <h4 className='heading-form-small'>Earlist Start Date</h4>
-                  <input className="form-control" id="earlieststartdate" type="text" ref={(input) => { this.earlieststartdate = input; }} name='earlieststartdate' placeholder="" />
+                  <Datetime ref={(input) => { this.earlieststartdate = input; }} />
+                  <span className="errclass">{this.state.earliesterr}</span>
                   </div>
                   <div className='col-sm-12 col-md-12 form-group input-group zero-margin'>
                   <h4 className='heading-form-small'>Latest End Date</h4>
-                  <input className="form-control" id="latestenddate" type="text" ref={(input) => { this.latestenddate = input; }} name='latestenddate' placeholder="" />
+                  <Datetime ref={(input) => { this.latestenddate = input; }} />
+                  <span className="errclass">{this.state.latesterr}</span>
                   </div>
                   <div className='col-sm-12 col-md-12 form-group input-group zero-margin'>
                   <h4 className='heading-form-small'>Description</h4>
                   <input className="form-control" id="description" type="text" ref={(input) => { this.description = input; }} name='description' placeholder="" />
+                  <span className="errclass">{this.state.descerr}</span>
                   </div>
                   <div className='col-sm-12 col-md-12 form-group input-group zero-margin'>
                   <h4 className='heading-form-small'>Backgrounds</h4>
@@ -131,7 +162,7 @@ class SideBar extends Component {
                         onChange={this.handleBackgroundSelectChange}
                         options={backgroundSkills}
                         />
-                      {this.state.errorbg}
+                      <span className="errclass">{this.state.backgrounderr}</span>
                   </div>
                   <div className='col-sm-12 col-md-12 form-group input-group zero-margin'>
                   <h4 className='heading-form-small'>Skills</h4>
@@ -142,14 +173,17 @@ class SideBar extends Component {
                         onChange={this.handleSkillsSelectChange}
                         options={skillsValue}
                         />
+                        <span className="errclass">{this.state.skillserr}</span>
                   </div>
                   <div className='col-sm-12 col-md-12 form-group input-group zero-margin'>
                   <h4 className='heading-form-small'>Selection Process</h4>
                   <input className="form-control" id="selectionprocess" type="text" ref={(input) => { this.selectionprocess = input; }} name='selectionprocess' placeholder="" />
+                  <span className="errclass">{this.state.selectionerr}</span>
                   </div>
                   <div className='col-sm-12 col-md-12 form-group input-group zero-margin'>
                   <h4 className='heading-form-small'>Salary</h4>
                   <input className="form-control" id="salary" type="text" ref={(input) => { this.salary = input; }} name='salary' placeholder="" />
+                  <span className="errclass">{this.state.salaryerr}</span>
                   </div>
                   <div className='col-sm-12 col-md-12 form-group input-group zero-margin'>
                   <h4 className='heading-form-small'>City</h4>
@@ -157,6 +191,7 @@ class SideBar extends Component {
                         inputProps={inputProps}
                         autocompleteItem={AutocompleteItem}
                       />
+                      <span className="errclass">{this.state.addresserr}</span>
                   </div>
                 </div>
                 <span className="user-view-buttons float-right">

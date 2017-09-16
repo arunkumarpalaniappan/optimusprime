@@ -187,3 +187,8 @@ body {
 .input-group .form-control {
   z-index: 0 !important;
 }
+.errclass {
+  color: #ff3131;
+  font-size: 12px;
+  padding-left: 5px;
+}
