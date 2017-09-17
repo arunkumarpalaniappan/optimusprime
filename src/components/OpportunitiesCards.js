@@ -6,14 +6,15 @@ class OpportunitiesCards extends Component {
         super(props, context);
         this.state = {
             viewSidebarActive:false,
-            opprid:null
+            opprid:null,
+            isNew: false
         }
         this.viewShowSideBar = this.viewShowSideBar.bind(this);
         this.viewHideSideBarCancel = this.viewHideSideBarCancel.bind(this);
         this.viewHideSideBar = this.viewHideSideBar.bind(this);
       }
       viewShowSideBar(event) {// eslint-disable-next-line
-        this.setState({viewSidebarActive:true,opprid: parseInt(event.target.getAttribute('id'))})
+        this.setState({viewSidebarActive:true,isNew:true,opprid: parseInt(event.target.getAttribute('id'))})
       }
       viewHideSideBarCancel(){
         this.setState({viewSidebarActive:false});
@@ -57,7 +58,7 @@ class OpportunitiesCards extends Component {
         return (
           <div className={"cards-div"}>             
             {pageCards}
-            <SideBar isActive={this.state.viewSidebarActive} opprId={this.state.opprid} onCreate={this.viewHideSideBar} onDismiss={this.viewHideSideBarCancel} />
+            <SideBar isActive={this.state.viewSidebarActive} loadnew={this.state.isNew} opprId={this.state.opprid} onCreate={this.viewHideSideBar} onDismiss={this.viewHideSideBarCancel} />
           </div>
         );
     }
